@@ -15,7 +15,7 @@ int main(int argc, char **argv)
   wyswietl(L2);
   LZespolona L3 = operator /(L1,L2);
   wyswietl(L3);
-  
+  IStream Istr = {stdin, false};
 
   if (argc < 2) {
     cout << endl;
