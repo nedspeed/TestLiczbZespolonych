@@ -1,6 +1,8 @@
 #include <iostream>
+#include <cmath>
 #include "BazaTestu.hh"
 #include "LZespolona.hh"
+#include "Statystyka.hh"
 
 using std::cout;
 using std::cerr;
@@ -9,46 +11,48 @@ using std::endl;
 
 int main(int argc, char **argv)
 {
-  LZespolona L1 = utworz(2,3);
-  wyswietl(L1);
-  LZespolona L2 = utworz(2,4);
-  wyswietl(L2);
-  LZespolona L3 = operator /(L1,L2);
-  wyswietl(L3);
-  IStream Istr = {stdin, false};
+LZespolona odpowiedz, popr;
+Statystyka stat;
+int n;
 
   if (argc < 2) {
-    cout << endl;
-    cout << " Brak opcji okreslajacej rodzaj testu." << endl;
-    cout << " Dopuszczalne nazwy to:  latwy, trudny." << endl;
-    cout << endl;
+    std::cout << std::endl;
+    std::cout << " Brak opcji okreslajacej rodzaj testu." << std::endl;
+    std::cout << " Dopuszczalne nazwy to:  latwy, trudny." << std::endl;
+    std::cout << std::endl;
     return 1;
   }
 
 
-  BazaTestu   BazaT = { nullptr, 0, 0 };
+  BazaTestu BazaT = { nullptr, 0, 0 };
 
   if (InicjalizujTest(&BazaT,argv[1]) == false) {
-    cerr << " Inicjalizacja testu nie powiodla sie." << endl;
+    std::cerr << " Inicjalizacja testu nie powiodla sie." << std::endl;
     return 1;
   }
 
 
   
-  cout << endl;
-  cout << " Start testu arytmetyki zespolonej: " << argv[1] << endl;
-  cout << endl;
+  std::cout << std::endl;
+  std::cout << " Start testu arytmetyki zespolonej: " << argv[1] << std::endl;
+  std::cout << std::endl;
 
   WyrazenieZesp   WyrZ_PytanieTestowe;
   
-  while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
-    cout << " Czesc rzeczywista pierwszego argumentu: ";
-    cout << WyrZ_PytanieTestowe.Arg1.re << endl;
-  }
+  while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)){
+        std::cout << "Podaj wynik operacji:";
+        Wyswietl(WyrZ_PytanieTestowe);
+        std::cout << "Twoja odpowiedz:";
+        std::cin >> odpowiedz;
+        popr = Oblicz(WyrZ_PytanieTestowe);
+        n = Sprawdz(odpowiedz, popr);       //sprawdzamy czy odpowiedz poprawna
+        Zwieksz(n, stat);               //aktualizujemy statystyke
+    }
 
   
-  cout << endl;
-  cout << " Koniec testu" << endl;
-  cout << endl;
-
+  std::cout << std::endl;
+  std::cout << " Koniec testu" << std::endl;
+  std::cout << std::endl;
+Odpowiedz(stat);        //wyswietlamy statystyke
+return 0;
 }

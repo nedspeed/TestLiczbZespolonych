@@ -2,7 +2,8 @@
 #include <tgmath.h>
 #ifndef LZESPOLONA_HH
 #define LZESPOLONA_HH
-
+using std::istream;
+using std::ostream;
 /*!
  *  Plik zawiera definicje struktury LZesplona oraz zapowiedzi
  *  przeciazen operatorow arytmetycznych dzialajacych na tej 
@@ -31,6 +32,7 @@ LZespolona Sprzezenie(LZespolona Skl2);
 double Modul2(LZespolona Skl2);
 LZespolona operator / (LZespolona Skl1, LZespolona Skl2);
 LZespolona operator / (LZespolona Skl1, double Skl2);
-LZespolona utworz(double re, double im);
-void wyswietl(LZespolona L1);
+std::istream & operator >> (istream & str, LZespolona & lz);
+std::ostream & operator << (ostream & str, const LZespolona lz);
+int Sprawdz (LZespolona p, LZespolona u);
 #endif
